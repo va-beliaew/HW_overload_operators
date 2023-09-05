@@ -3,42 +3,68 @@
 class Fraction
 {
 private:
-	int numerator_;
-	int denominator_;
+	int numerator = 0;
+	int denominator = 0;
 
 public:
-	Fraction(int numerator, int denominator)
+	Fraction(int numerator_, int denominator_)
 	{
-		numerator_ = numerator;
-		denominator_ = denominator;
+		numerator = numerator_;
+		denominator = denominator_;
 	}
 	bool operator< (Fraction f) {
-		return (numerator_ < f.numerator_ ? 1 : (numerator_ == f.numerator_ ? (denominator_ < f.denominator_ ? 1 : 0) : 0));
+		if (denominator == f.denominator) {
+			return (numerator < f.numerator ? 1 : 0);
+		}
+		else {
+			return ((numerator * f.denominator) < (f.numerator * denominator) ? 1 : 0);
+		}
 	}
 	bool operator> (Fraction f) {
-		return (numerator_ > f.numerator_ ? 1 : (numerator_ == f.numerator_ ? (denominator_ > f.denominator_ ? 1 : 0) : 0));
+		if (denominator == f.denominator) {
+			return (numerator > f.numerator ? 1 : 0);
+		}
+		else {
+			return ((numerator * f.denominator) > (f.numerator * denominator) ? 1 : 0);
+		}
 	}
 	bool operator<= (Fraction f) {
-		return (numerator_ <= f.numerator_ ? (numerator_ < f.numerator_ ? 1 : (denominator_ <= f.denominator_ ? 1 : 0)) : 0);
+		if (denominator == f.denominator) {
+			return (numerator <= f.numerator ? 1 : 0);
+		}
+		else {
+			return ((numerator * f.denominator) <= (f.numerator * denominator) ? 1 : 0);
+		}
 	}
 	bool operator>= (Fraction f) {
-		return (numerator_ >= f.numerator_ ? (numerator_ > f.numerator_ ? 1 : (denominator_ >= f.denominator_ ? 1 : 0)):0);
+		if (denominator == f.denominator) {
+			return (numerator >= f.numerator ? 1 : 0);
+		}
+		else {
+			return ((numerator * f.denominator) >= (f.numerator * denominator) ? 1 : 0);
+		}
 	}
 	bool operator== (Fraction f) {
-		return (numerator_ == f.numerator_ && denominator_ == f.denominator_);
+		if (denominator == f.denominator) {
+			return (numerator == f.numerator ? 1 : 0);
+		}
+		else {
+			return ((numerator * f.denominator) == (f.numerator * denominator) ? 1 : 0);
+		}
 	}
-	bool operator!= (Fraction f) {
-		return (numerator_ != f.numerator_ || denominator_ != f.denominator_);
-	}
-#if 0 // В моей версии "spaceship" не поддерживается
-	auto operator<=> (const Fraction&) const = default;
-#endif
+		bool operator!= (Fraction f) {
+			if (denominator == f.denominator) {
+				return (numerator != f.numerator ? 1 : 0);
+			}
+			else {
+				return ((numerator * f.denominator) != (f.numerator * denominator) ? 1 : 0);
+			}
+		}
 };
 
-int main()
-{
-	Fraction f1(4, 3); //4, 3
-	Fraction f2(6, 11); //6, 11
+int main () {
+	Fraction f1(4, 8); //4, 3
+	Fraction f2(2, 1); //6, 11
 
 	std::cout << "f1" << ((f1 == f2) ? " == " : " not == ") << "f2" << '\n';
 	std::cout << "f1" << ((f1 != f2) ? " != " : " not != ") << "f2" << '\n';
